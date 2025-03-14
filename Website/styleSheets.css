@@ -1,0 +1,172 @@
+body {
+  background-image: url("site.jpg");
+  background-repeat: no-repeat;
+  background-position: right top;
+  margin-right: 200px;
+  background-attachment: fixed;
+}
+
+#text-box1 {
+	position: relative;
+	float: left ;
+	background-color: white;
+	width: 600px;
+	height: 800px;   
+       border: solid;
+	padding: 100px;
+	margin-top: 50px;
+	margin-bottom:20px ;
+	margin-left: 90px;	
+	border-radius:10px ;	 
+	opacity: 0.8;  
+	    aspect-ratio: 3/1;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;	
+}
+
+.text-box2{
+       float: right ;
+	background-color: white;
+	width: 600px;
+	height: 460px; 
+       border: solid;
+	padding: 100px;
+	margin-top: 50px;
+	margin-bottom:100px ;
+	margin-right: 400px;		
+	border-radius:10px ;	
+	position: relative;
+
+      aspect-ratio: 3/1;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+  opacity: 0.8;
+}
+
+.text-box2 p{
+       font-family: cursive;
+       font_size: 14px;
+       line_height: 16px;
+       color: orange;
+       font-weight: 100;
+}
+
+textarea{
+        opacity: 0.6;
+	width: 970px;
+	height: 80px;	
+	background-color: #fff;
+	resize:none ;
+	position: relative;
+}
+
+#edit-textarea{
+      margin:147px;
+	width: 670px;
+	height: 80px;	
+	background-color: #fff;
+	resize:none ;
+	position: relative;
+}
+
+button{
+	width: 95px;
+	height: 50px;'
+	background-color: wheat;
+	border: double;
+	color: black;
+	font-family: cursive;
+	font-weight: 400;
+	cursor: pointer;
+}
+
+#delete-form {
+	position: absolute;
+	top: 0px;
+	right: 140px;
+}
+
+#delete-form {
+	width: 40px;
+	height: 20px;
+	color: black;
+	background-color: aliceblue;	
+       opacity: 0.7;
+}
+
+#delete-form: hover {
+	opacity: 1;
+}
+
+.edit-form {
+	position: absolute;
+	top: 0px;
+	right: 0px;
+}
+
+.edit-form button{
+	width: 75px;
+	height: 50px;
+	color: black;
+	background-color: aliceblue;
+	border: double;
+       opacity: 0.7;
+}
+
+.edit-form button: hover {
+	opacity: 1;
+}
+
+.reply-form{
+	width: 900px;
+	height: 10px;
+	float: right;
+	position: absolute;
+	top: 0px;
+	right: 190px;
+	background-color: black;
+}
+
+
+
+
+
+#delete-form2 {
+	position: absolute;
+	bottom: 750px;	
+	left: 470px;
+}
+
+#delete-form2 {
+	width: 40px;
+	height: 20px;
+	color: black;
+	background-color: aliceblue;	
+       opacity: 0.7;
+}
+
+#delete-form2: hover {
+	opacity: 1;
+}
+
+.edit-form2 {
+	position: relative;
+	top: 0px;
+	right: 233px;
+	
+}
+
+.edit-form2 button{
+	width: 75px;
+	height: 50px;
+	color: black;
+	background-color: aliceblue;
+	border: double;
+       opacity: 0.7;
+}
+
+.edit-form2 button: hover {
+	opacity: 1;
+}

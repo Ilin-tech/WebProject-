@@ -1,0 +1,33 @@
+
+body {
+  background-image: url("drum.jpg");
+  background-repeat: no-repeat;
+  background-position: right top;
+  margin-right: 200px;
+  background-attachment: fixed;
+  background-size: 1980px; 
+}
+.container{
+
+	width: 650px;
+	height: 200px;
+	border: ;
+    padding: 50px;
+    opacity: 0.9;
+    background-color: white;
+}
+
+.form-box{
+	margin-top: 5pc;
+	margin-left:30pc ;
+	width: 900px;
+	height: 600px;
+	border: double;
+	padding: 10px;
+  background-color: white;
+  opacity: 0.8;
+}
+
+#btnSubmit{
+	color: chocolate;
+}

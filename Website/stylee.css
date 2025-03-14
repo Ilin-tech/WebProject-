@@ -1,0 +1,41 @@
+
+
+.home-box { 
+    width: 650px;  
+      border: ;
+	padding: 100px;
+	margin-top: 50px;
+	margin-bottom:20px ;
+	margin-left: 530px;	
+	background-color: white;
+	border-radius:10px ;
+	position: relative;
+	align-content: center;   
+		 opacity: 0.9;
+}	
+ 	
+
+.form{
+
+    border: ;
+	padding: 100px;
+	margin-bottom:20px ;
+	background-color: white;
+	border-radius:10px ;
+	position: relative;
+	align-content: center;		
+}
+
+#btn{
+	background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, .4), rgba(0, 0, 0, 0));
+	background-color: honeydew;
+	font-family: cursive;
+	width: 200px;
+}
+
+h1{
+	color: orange;
+	margin-left: 150px;
+}
+
+
