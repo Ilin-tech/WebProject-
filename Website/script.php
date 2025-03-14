@@ -1,5 +1,5 @@
 <?php
-#region************** Alte functii : Sing up, Login , Log out, Insert , ************************ 
+#region************** Other functions: Sign up, Login, Log out, Insert ************************ 
 function getLogin($link){          
 	if (isset($_POST['loginSubmit'])){
 	$uid=$_POST['uid'];
@@ -8,7 +8,7 @@ function getLogin($link){
 	$result=$link->query($sql);
 	if (mysqli_num_rows($result) > 0) {
 		if($row = $result -> fetch_assoc()){
-			$_SESSION['id'] = ['id'];	
+			$_SESSION['id'] = $row['id'];	
 			$_SESSION['uid']=$row['uid'];		
 			header("Location: WebNews.php?loginsuccess");
 			exit();
@@ -21,7 +21,7 @@ function getLogin($link){
 	}
 }
 
-              //------Functia pentru delogare
+// Function for logging out
 function userLogout(){        
  if (isset($_POST['logoutSubmit'])){
 	session_start();
@@ -39,6 +39,9 @@ function insertNews($link){
 
 		$sql ="INSERT INTO comments (uid , date , message) VALUES ('$uid','$date','$message')";
 		$result = $link ->query($sql);
+		if (!$result) {
+			die("Query failed: " . mysqli_error($link));
+		}
     }     
 }
 
@@ -51,7 +54,7 @@ function createUser($link){
 		$result = $link ->query($sql);
 		$num= mysqli_num_rows($result);
 		if($num == 1){
-			echo "UserName Already Taken";
+			echo "Username Already Taken";
 		}else{
 			$reg="INSERT INTO users (uid , pwd) VALUES('$name' , '$pass')";
 			mysqli_query($link ,$reg);			
@@ -59,139 +62,71 @@ function createUser($link){
 		header("Location: HomePage.php");
     }     
 }
-#endregion************************************************************************
 
-//
-//
-//
+// Function for retrieving messages
 
-#region ------- Functia pentru preluarea mesajelor ------------------------------------------  
 function getComments($link){
 	$sql= "SELECT * FROM comments";
 	$result=$link->query($sql);
 	while ($row= $result->fetch_assoc()){
-		echo"<div class='text-box2' type='text'><hr><p>";
-		echo $row['uid']."<br>";
-		echo $row['date']."<br><br>";
+		echo "<div class='text-box2' type='text'><hr><p>";
+		echo $row['uid'] . "<br>";
+		echo $row['date'] . "<br><br>";
 		echo nl2br($row['message']); 
-      echo"</p>  
+		echo "</p>
+		<form id='delete-form' method='POST' action='deleteComment.php'>
+		<input type='hidden' name='cid' value='".$row['cid']."'>
+		<button type='submit' name='commentDelete'>Delete</button>
+		</form>
 
-     <form id='delete-form' method='POST' action='".deleteComments($link)."'>
-	   <input type='hidden' name='cid' value='".$row['cid']."'>	
-	   <button type='submit' name='commentDelete'>Delete</button>	  
-      </form>
-    </form>
-
-    <form class='edit-form' method='POST' action='editnews.php'>
-	 <input type='hidden' name='cid' value='".$row['cid']."'>
-	 <input type='hidden' name='uid' value='".$row['uid']."'>
-	 <input type='hidden' name='date' value='".$row['date']."'>
-	 <input type='hidden' name='message' value='".$row['message']."'>
-	 <button>Edit</button><br><br>
-    </form>   	 
-   </div>"; 
+		<form class='edit-form' method='POST' action='editnews.php'>
+		<input type='hidden' name='cid' value='".$row['cid']."'>
+		<input type='hidden' name='uid' value='".$row['uid']."'>
+		<input type='hidden' name='date' value='".$row['date']."'>
+		<input type='hidden' name='message' value='".$row['message']."'>
+		<button type='submit'>Edit</button><br><br>
+		</form>
+		</div>"; 
 	}     
-		
 }
 
-function editNews($link){
-	if (isset($_POST['commentSubmit'])){
-		$cid = $_POST['cid'];
-		$uid = $_POST['uid'];
-		$date = $_POST['date'];
-		$message = $_POST['message'];
-		$sql =" UPDATE comments SET message='$message' WHERE cid='$cid' ";
-		$result = $link ->query($sql);
-		header("Location: WebNews.php");
-	}
-}
+// Function to delete a comment
 
-function deleteComments($link){     //--- Functia pentru stergerea comentariului.
+function deleteComments($link){
 	if (isset($_POST['commentDelete'])) {
-		 $cid = $_POST['cid'];		
-		$sql ="DELETE FROM comments WHERE cid='$cid'";
-		$result = $link ->query($sql);
-		header("Location: WebNews.php");
-	}
-}
-#endregion ------------------------------------------------------------------
-
-//
-//
-//
-
- #region----------------------Functia pentru preluarea articolelor , inserarea , editarea ,stergerea ------------------------////////
- 
-function getArticles($link){
-	  $sql ="SELECT * FROM post";
-	 $result =$link->query($sql);
-	while ($row = $result->fetch_assoc()){		
-		echo"<div id='text-box1' type='text'><hr><p>";
-		echo $row['uid']."<br>";
-		echo $row['date']."<br><br>";
-		echo nl2br($row['article']);             
-       echo"</p>    
-     <form id='delete-form2' method='POST' action='".deleteArticle($link)."'>
-	   <input type='hidden' name='cid' value='".$row['cid']."'>	
-	   <button type='submit' name='articleDelete'>Delete</button>	  
-      </form>
-    </form>
-
-    <form id='edit-form2' method='POST' action='editArticles.php'>
-	 <input type='hidden' name='cid' value='".$row['cid']."'>
-	 <input type='hidden' name='uid' value='".$row['uid']."'>
-	 <input type='hidden' name='date' value='".$row['date']."'>
-	 <input type='hidden' name='article' value='".$row['article']."'>
-	 <button>Edit</button><br><br>
-    </form> 
-     	 
-   </div>";
- }     
-
-}
-
-function insertArticles($link){
-	if (isset($_POST['articleSubmit'])) {    
-      $uid = $_POST['uid'];
-      $date = $_POST['date'];
-      $article = $_POST['article'];
-
-	  $sql ="INSERT INTO post (uid , date , article) VALUES ('$uid','$date','$article')";
-	  $result = $link ->query($sql);
-    }     
-}
-
-function editArticles($link){
-	if (isset($_POST['articleSubmit'])){
 		$cid = $_POST['cid'];
-		$uid = $_POST['uid'];
-		$date = $_POST['date'];
-		$article = $_POST['article'];
-
-		$sql =" UPDATE post SET article='$article' WHERE cid='$cid' ";
-		$result = $link ->query($sql);
+		$sql ="DELETE FROM comments WHERE cid='$cid'";
+		$result = $link->query($sql);
+		if (!$result) {
+			die("Query failed: " . mysqli_error($link));
+		}
 		header("Location: WebNews.php");
 	}
 }
 
-function deleteArticle($link){     //--- Functia pentru stergerea comentariului.
-	if (isset($_POST['articleDelete'])) {
-		 $cid = $_POST['cid'];	
+// Function for retrieving, inserting, editing, and deleting articles
 
-		$sql ="DELETE FROM post WHERE cid='$cid'";
-		$result = $link ->query($sql);
-		header("Location: WebNews.php");
-	}
+function getArticles($link){
+	$sql ="SELECT * FROM post";
+	$result = $link->query($sql);
+	while ($row = $result->fetch_assoc()){
+		echo "<div id='text-box1' type='text'><hr><p>";
+		echo $row['uid'] . "<br>";
+		echo $row['date'] . "<br><br>";
+		echo nl2br($row['article']);             
+		echo "</p>
+		<form id='delete-form2' method='POST' action='deleteArticle.php'>
+		<input type='hidden' name='cid' value='".$row['cid']."'>
+		<button type='submit' name='articleDelete'>Delete</button>
+		</form>
+		
+		<form id='edit-form2' method='POST' action='editArticles.php'>
+		<input type='hidden' name='cid' value='".$row['cid']."'>
+		<input type='hidden' name='uid' value='".$row['uid']."'>
+		<input type='hidden' name='date' value='".$row['date']."'>
+		<input type='hidden' name='article' value='".$row['article']."'>
+		<button type='submit'>Edit</button><br><br>
+		</form>
+		</div>";
+	}     
 }
-
-#endregion ---------------------------------------
-
-
-
-
-
-
-
-
-
-?>
